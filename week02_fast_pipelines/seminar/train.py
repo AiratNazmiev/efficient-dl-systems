@@ -25,7 +25,7 @@ def create_model():
 
 def train(
     model: nn.Module,
-    loss_fn: nn.modules.loss,
+    loss_fn: nn.modules.loss._Loss,
     optimizer: torch.optim.Optimizer,
     train_dataloader: torch.utils.data.DataLoader,
     val_dataloader: torch.utils.data.DataLoader,
@@ -78,7 +78,7 @@ def train(
 
 def train_amp(
     model: nn.Module,
-    loss_fn: nn.modules.loss,
+    loss_fn: nn.modules.loss._Loss,
     optimizer: torch.optim.Optimizer,
     train_dataloader: torch.utils.data.DataLoader,
     val_dataloader: torch.utils.data.DataLoader,
@@ -87,7 +87,7 @@ def train_amp(
     precision: Literal["fp16", "bf16"] = "bf16",
     loss_scaling: bool = False,
 ) -> None:
-    scaler = torch.cuda.amp.GradScaler()
+    scaler = torch.amp.GradScaler('cuda')
     model.to(device)
 
     if precision == "fp16":
