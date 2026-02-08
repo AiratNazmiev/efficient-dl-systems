@@ -1,6 +1,7 @@
+from __future__ import annotations
+
 import os
 from os.path import isfile, join
-from typing import List, Tuple
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -11,7 +12,7 @@ from torchvision import transforms
 
 
 class Carvana(Dataset):
-    def __init__(self, root: str, transform: transforms.Compose = None) -> None:
+    def __init__(self, root: str, transform: transforms.Compose | None = None) -> None:
         """
         :param root: path to the data folder
         :param transform: transforms of the images and labels
@@ -20,7 +21,7 @@ class Carvana(Dataset):
         self.transform = transform
         (self.data_path, self.labels_path) = ([], [])
 
-        def load_images(path: str) -> List[str]:
+        def load_images(path: str) -> list[str]:
             """
             Return a list with paths to all images
 
@@ -35,7 +36,7 @@ class Carvana(Dataset):
         self.data_path = load_images(self.root + "/train")
         self.labels_path = load_images(self.root + "/train_masks")
 
-    def __getitem__(self, index: int) -> Tuple[torch.Tensor, torch.Tensor]:
+    def __getitem__(self, index: int) -> tuple[torch.Tensor, torch.Tensor]:
         """
         :param index: sample index
         :return: tuple (img, target) with the input data and its label
@@ -66,7 +67,7 @@ def get_train_data() -> torch.utils.data.DataLoader:
     return train_loader
 
 
-def im_show(img_list: List[Tuple[torch.Tensor, torch.Tensor]]) -> None:
+def im_show(img_list: list[tuple[torch.Tensor, torch.Tensor]]) -> None:
     """
     Plots images with corresponding segmentation masks
 
